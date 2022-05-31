@@ -1,0 +1,9 @@
+functions:
+  # Name the zip file you want juni to create
+  pyorm:
+    # The dependencies of the router function.
+    image: lambci/lambda:build-python3.7
+    requirements: ./src/requirements.txt
+    # Include this file in the generated zip artifact.
+    include:
+    - ./src/lambda_function.py
