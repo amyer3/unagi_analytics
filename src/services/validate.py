@@ -1,8 +1,20 @@
-import sys, json
+import json, os
 
+accounts = [
 
-f = open('keys/user_profiles.json')
-accounts = json.load(f)['accounts']
+    {
+        "username": "lambda",
+        "password": "Ow198dfxRVmLVG"
+     },
+    {
+        "username": "izzard",
+        "password": "x7pR0uxE4AJO!G0FN&t*b2e!cs^aeuo"
+    },
+    {
+        "username": "lambda_write",
+        "password": "ai3Ugdvjztr8SC7t5Z5wJ40u7"
+     }
+]
 
 
 def check_auth(username: str, password: str) -> bool:

@@ -33,7 +33,7 @@ def execute_webhook(service: str, action: str):
     event = request.json
     if service == 'zendesk':
         if action == 'new_ticket':
-            search_and_update(email=event['email'], phone=event['phone'])
+            search_and_update(email=event['email'], phone=event['phone'], conenction=c)
     pass
 
 

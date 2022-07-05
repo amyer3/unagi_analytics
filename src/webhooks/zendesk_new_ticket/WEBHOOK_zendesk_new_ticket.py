@@ -1,12 +1,9 @@
-import datetime, requests, json
-from src.services import connection_manager as cm
+import datetime, requests
 from .make_html_body import make_html
 from .data_sources.get_subscription_logistics import get_subscription_logistics
 from .data_sources.get_subscription_orders import get_subscription_orders
 from .data_sources.get_dtc_orders import get_dtc_orders
 from .data_sources.get_all_customers import get_all_customers
-
-c = cm.Connection()
 
 USERNAME = 'alex.myers@unagiscooters.com/token'
 TOKEN = 'AVeITAD0b4fPhkfIKLQE8r8bEttL9mDQLaaLtpWU'
@@ -17,6 +14,7 @@ def clean_phone(phone: any) -> str:
 
 
 def search_and_update(ticket_id: int, conenction={}, **kwargs):
+    c=conenction
     updated_at = datetime.datetime.strftime(datetime.datetime.now(), '%B %m, %Y at %R UTC')
     phone_c = clean_phone(kwargs['phone']) if 'phone' in kwargs else '9999999999999999999999999'
     email_c = kwargs['email'] if 'email' in kwargs else '9999999999999999999999999'
