@@ -1,4 +1,4 @@
-from templates.container import make_main_body
+from .templates.container import make_main_body
 
 
 def make_html(time, sub_data, dtc_data, customer_data):

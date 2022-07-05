@@ -1,10 +1,10 @@
 import datetime, requests, json
 from src.services import connection_manager as cm
-from make_html_body import make_html
-from data_sources.get_subscription_logistics import get_subscription_logistics
-from data_sources.get_subscription_orders import get_subscription_orders
-from data_sources.get_dtc_orders import get_dtc_orders
-from data_sources.get_all_customers import get_all_customers
+from .make_html_body import make_html
+from .data_sources.get_subscription_logistics import get_subscription_logistics
+from .data_sources.get_subscription_orders import get_subscription_orders
+from .data_sources.get_dtc_orders import get_dtc_orders
+from .data_sources.get_all_customers import get_all_customers
 
 c = cm.Connection()
 
