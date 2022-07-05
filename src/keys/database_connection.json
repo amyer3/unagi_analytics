@@ -1,0 +1,24 @@
+{
+  "snowflake": {
+    "user": "RETOOL_USER",
+    "password": "O9am8Aj(1ma*",
+    "account": "mk25046.us-central1.gcp",
+    "warehouse": "SEGMENT_WAREHOUSE",
+    "database": "UNAGI_EDW"
+  },
+  "postgres": {
+    "host": "db-postgresql-sfo2-76942-do-user-8637590-0.b.db.ondigitalocean.com",
+    "dbname": "defaultdb-pool",
+    "user": "doadmin",
+    "password": "kiutqfyoi3kiz1ce",
+    "port": "25061",
+    "sslmode": "require"
+  },
+  "snowflake_write": {
+    "user": "alex",
+    "password": "O@lIGFq*gJErZmT8GUnVmJ4CqUtZI3xPqO8z!8VHcaxn&S8l^o^$ibU7",
+    "account": "mk25046.us-central1.gcp",
+    "warehouse": "SEGMENT_WAREHOUSE",
+    "database": "UNAGI_EDW"
+  }
+}
