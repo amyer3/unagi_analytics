@@ -1,8 +1,9 @@
-from flask import Flask, jsonify, request, Response
+from flask import Flask, jsonify, request
 import re
 from services.find_prepared_statement import *
 from services.validate import check_auth
 from services.connection_manager import Connection
+from webhooks.zendesk_new_ticket.WEBHOOK_zendesk_new_ticket import search_and_update
 
 app = Flask(__name__)
 c = Connection()
@@ -29,6 +30,15 @@ def write_fx():
 
 @app.route("/webhook/<string:service>/<string:action>", methods=["POST", "GET"])
 def execute_webhook(service: str, action: str):
+    event = request.json
+    if service == 'zendesk':
+        if action == 'new_ticket':
+            search_and_update(email=event['email'], phone=event['phone'])
+    pass
+
+
+@app.route("/docs", methods=["GET"])
+def serve_docs():
     pass
 
 
