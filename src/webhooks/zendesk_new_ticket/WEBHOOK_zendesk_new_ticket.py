@@ -7,14 +7,16 @@ from .data_sources.get_all_customers import get_all_customers
 
 USERNAME = 'alex.myers@unagiscooters.com/token'
 TOKEN = 'AVeITAD0b4fPhkfIKLQE8r8bEttL9mDQLaaLtpWU'
+#zendesk sk to verify
+ZDSK= 'W2P9ZXjJp9W85LBPlzuCBh5rli3_sWlYhGfp27jyVm4='
 
 
 def clean_phone(phone: any) -> str:
     return str(phone).replace(')', '').replace('(', '').replace('-', '').replace(' ', '')[4:]
 
 
-def search_and_update(ticket_id: int, conenction={}, **kwargs):
-    c=conenction
+def search_and_update(ticket_id: int, connection = {}, **kwargs):
+    c=connection
     updated_at = datetime.datetime.strftime(datetime.datetime.now(), '%B %m, %Y at %R UTC')
     phone_c = clean_phone(kwargs['phone']) if 'phone' in kwargs else '9999999999999999999999999'
     email_c = kwargs['email'] if 'email' in kwargs else '9999999999999999999999999'

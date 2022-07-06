@@ -12,7 +12,7 @@ regex_bad_query = re.compile(
 
 @app.route('/hb', methods=['GET'])
 def heartbeat():
-    return 200
+    return jsonify(success=True)
 
 @app.route('/write_fx', methods=['POST'])
 def write_fx():
@@ -34,10 +34,15 @@ def write_fx():
 @app.route("/webhook/<string:service>/<string:action>", methods=["POST", "GET"])
 def execute_webhook(service: str, action: str):
     event = request.json
+    print(event)
     if service == 'zendesk':
         if action == 'new_ticket':
-            search_and_update(email=event['email'], phone=event['phone'], conenction=c)
-    pass
+            search_and_update(ticket_id=event['ticket']['id'],
+                              email=event['ticket']['email'],
+                              phone=event['ticket']['phone'],
+                              conenction=c
+                              )
+    return jsonify(success=True)
 
 
 @app.route("/docs", methods=["GET"])
