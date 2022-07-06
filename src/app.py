@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request
 import re
+from threading import Thread
 from services.find_prepared_statement import *
 from services.validate import check_auth
 from services.connection_manager import Connection
@@ -10,9 +11,11 @@ c = Connection()
 regex_bad_query = re.compile(
     "(delete|truncate|update|drop|insert|create|alter|grant|revoke|commit|save|rollback|rename|merge)", re.IGNORECASE)
 
+
 @app.route('/hb', methods=['GET'])
 def heartbeat():
     return jsonify(success=True)
+
 
 @app.route('/write_fx', methods=['POST'])
 def write_fx():
@@ -37,11 +40,9 @@ def execute_webhook(service: str, action: str):
     print(event)
     if service == 'zendesk':
         if action == 'new_ticket':
-            search_and_update(ticket_id=event['ticket']['id'],
-                              email=event['ticket']['email'],
-                              phone=event['ticket']['phone'],
-                              conenction=c
-                              )
+            Thread(
+                target=search_and_update(ticket_id=event['ticket']['id'], connection=c, email=event['ticket']['email'],
+                                         phone=event['ticket']['phone'])).start()
     return jsonify(success=True)
 
 
@@ -56,7 +57,7 @@ def make_request():
     is_auth = check_auth(event['username'], event['password'])
     if not request.is_secure:
         pass
-        #return jsonify("must use https, service will not auto-upgrade for you.")
+        # return jsonify("must use https, service will not auto-upgrade for you.")
 
     if not event['transactions'] or event is None:
         return jsonify("no transactions")

@@ -15,7 +15,7 @@ def clean_phone(phone: any) -> str:
     return str(phone).replace(')', '').replace('(', '').replace('-', '').replace(' ', '')[4:]
 
 
-def search_and_update(ticket_id: int, connection = {}, **kwargs):
+def search_and_update(ticket_id: int, connection, **kwargs):
     c=connection
     updated_at = datetime.datetime.strftime(datetime.datetime.now(), '%B %m, %Y at %R UTC')
     phone_c = clean_phone(kwargs['phone']) if 'phone' in kwargs else '9999999999999999999999999'
