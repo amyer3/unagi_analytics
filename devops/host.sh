@@ -2,7 +2,7 @@
 
 systemctl stop nginx
 systemctl stop pyorm
-cd ~/pyorm/ || exit
+cd /pyorm/ || exit
 rm -rf ./venv/
 python3 -m venv ./venv
 chmod a+rwx -R ./venv/
