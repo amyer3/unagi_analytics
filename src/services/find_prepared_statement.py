@@ -1,3 +1,4 @@
+import os
 ps_registry = [
     {
         "id": "daily_sales",
@@ -14,10 +15,11 @@ ps_registry = [
 
 
 def find_prepared_statement(id: str):
-    PREPARED_STATEMENT_BASE = '../prepareds_scripts/'
+    PREPARED_STATEMENT_BASE = 'src/services/sql_files/'
     for pid in ps_registry:
         if id == pid['id']:
-            query = open(PREPARED_STATEMENT_BASE + pid['file'])
+            path = os.path.abspath(PREPARED_STATEMENT_BASE +'/'+ pid['file'])
+            query = open(path)
             query = query.read()
             return {"query": query, "connection": pid['connection']}
     return None

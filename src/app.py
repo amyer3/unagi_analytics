@@ -47,7 +47,8 @@ def make_request():
     event = request.json
     is_auth = check_auth(event['username'], event['password'])
     if not request.is_secure:
-        return jsonify("must use https, service will not auto-upgrade for you.")
+        pass
+        #return jsonify("must use https, service will not auto-upgrade for you.")
 
     if not event['transactions'] or event is None:
         return jsonify("no transactions")
