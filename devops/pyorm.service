@@ -5,8 +5,8 @@ After=network.target
 [Service]
 User=www-data
 Group=www-data
-WorkingDirectory=/pyorm
-Environment="PATH=/pyorm/venv"
+#WorkingDirectory=/pyorm
+#Environment="PATH=/pyorm/venv"
 ExecStart=/pyorm/venv/bin/uwsgi --ini /pyorm/src/pyorm.ini
 #ExecStart=/pyorm/venv/bin/gunicorn --workers 3 --bind unix:/tmp/pyorm.sock --timeout 600 -m 007 wsgi:app
 

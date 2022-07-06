@@ -10,6 +10,9 @@ c = Connection()
 regex_bad_query = re.compile(
     "(delete|truncate|update|drop|insert|create|alter|grant|revoke|commit|save|rollback|rename|merge)", re.IGNORECASE)
 
+@app.route('/hb', methods=['GET'])
+def heartbeat():
+    return 200
 
 @app.route('/write_fx', methods=['POST'])
 def write_fx():

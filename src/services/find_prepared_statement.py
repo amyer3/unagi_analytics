@@ -15,6 +15,7 @@ ps_registry = [
 
 
 def find_prepared_statement(id: str):
+    # TODO: path routing not working with .ini file base directory in production, manually have to remove src/
     PREPARED_STATEMENT_BASE = 'src/services/sql_files/'
     for pid in ps_registry:
         if id == pid['id']:
