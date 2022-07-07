@@ -13,7 +13,11 @@ accounts = [
     {
         "username": "lambda_write",
         "password": "ai3Ugdvjztr8SC7t5Z5wJ40u7"
-     }
+     },
+    {
+      "username": "iot_backend",
+      "password": "18368ec5b614adbd8ff398111a4b648f4062a0e3c4de57eecc7820d584b327e1"
+    }
 ]
 
 

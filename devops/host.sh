@@ -22,7 +22,7 @@ chmod a+rwx -R /var/log/wsgi/
 chown -R root:www-data /pyorm/*
 usermod -aG www-data root
 echo "Activating VENV"
-source . ./venv/bin/activate && pip install -r src/requirements.txt
+source venv/bin/activate && pip install -r src/requirements.txt
 pip install flask psycopg2-binary snowflake-connector-python uwsgi
 echo "Restarting Services"
 systemctl start pyorm
