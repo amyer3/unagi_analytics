@@ -38,7 +38,7 @@ Shapely==1.8.2
 six==1.16.0
 snowflake-connector-python==2.7.9
 urllib3==1.26.9
-uWSGI==2.0.20
+uwsgi==2.0.20
 watchdog==2.1.9
 Werkzeug==2.1.2
 zipp==3.8.0

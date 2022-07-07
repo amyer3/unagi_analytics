@@ -1,16 +1,13 @@
 from flask import Flask, jsonify, request
-import re
 from threading import Thread
 from services.find_prepared_statement import *
 from services.validate import check_auth
 from services.connection_manager import Connection
+from services.query_security import check_bad_ddl
 from webhooks.zendesk_new_ticket.WEBHOOK_zendesk_new_ticket import search_and_update
 
 app = Flask(__name__)
 c = Connection()
-regex_bad_query = re.compile(
-    "(delete|truncate|update|drop|insert|create|alter|grant|revoke|commit|save|rollback|rename|merge)", re.IGNORECASE)
-
 
 @app.route('/hb', methods=['GET'])
 def heartbeat():
@@ -50,14 +47,13 @@ def execute_webhook(service: str, action: str):
 def serve_docs():
     pass
 
-
+#TODO: add in prepared statement to select & return full row from sub_current_status postgres
 @app.route("/request", methods=["POST"])
 def make_request():
     event = request.json
     is_auth = check_auth(event['username'], event['password'])
     if not request.is_secure:
-        pass
-        # return jsonify("must use https, service will not auto-upgrade for you.")
+        return jsonify("must use https, service will not auto-upgrade for you.")
 
     if not event['transactions'] or event is None:
         return jsonify("no transactions")
@@ -68,11 +64,12 @@ def make_request():
 
     for txn in event['transactions']:
         if 'predefined' in txn:
-            q = find_prepared_statement(txn['predefined'])
+            append = txn['fields'] if txn['fields'] is not None else {}
+            q = find_prepared_statement(txn['predefined'], append)
             txn['query'] = q['query']
             txn['connection'] = q['connection']
 
-        if re.match(regex_bad_query, txn['query']) is not None:
+        if check_bad_ddl(txn['query']) is not None:
             return jsonify("bad query. you know what you did.")
 
         tmp = c.get_data(connection=txn['connection'], query=txn['query'])

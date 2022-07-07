@@ -8,6 +8,7 @@ systemctl stop pyorm
 
 echo "stopping venv, just in case"
 deactivate
+#sudo apt-get install -y libtiff5-dev libjpeg8-dev zlib1g-dev liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev python-tk
 
 cd /pyorm/ || exit
 pwd
@@ -21,8 +22,8 @@ chmod a+rwx -R /var/log/wsgi/
 chown -R root:www-data /pyorm/*
 usermod -aG www-data root
 echo "Activating VENV"
-source . ./venv/bin/activate
-pip install -r src/requirements.txt
+source . ./venv/bin/activate && pip install -r src/requirements.txt
+pip install flask psycopg2-binary snowflake-connector-python uwsgi
 echo "Restarting Services"
 systemctl start pyorm
 systemctl start nginx

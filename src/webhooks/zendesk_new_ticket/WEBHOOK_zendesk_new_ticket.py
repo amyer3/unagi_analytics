@@ -89,3 +89,6 @@ def search_and_update(ticket_id: int, connection, **kwargs):
         pass
     return 200
 
+
+if __name__ == '__main__':
+    search_and_update(ticket_id=86221, connection=c, phone=4083582116, email='alextestemail@unagiscooters.com')
