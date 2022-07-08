@@ -29,8 +29,11 @@ def find_prepared_statement(id: str, append: {}):
             query = open(path)
             query = query.read()
             if id == 'sub_current_slot':
-                phone = append['phone'] if append['phone'] is not None else 9999999999999999999
-                email = append['email'] if append['email'] is not None else 9999999999999999999
+                phone, email = 9999999999999999999, 9999999999999999999
+                if 'phone' in append.keys():
+                    phone = append['phone']
+                if 'email' in append.keys():
+                    email = append['email']
                 query += f""" where email = '{email}' or phone = '{phone}'"""
             return {"query": query, "connection": pid['connection']}
     return None
