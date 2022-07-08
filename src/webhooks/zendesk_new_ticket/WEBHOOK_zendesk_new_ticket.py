@@ -40,14 +40,13 @@ def search_and_update(ticket_id: int, connection, **kwargs):
 
     # loop through customer details, and propigate a list of product/customer ID's and geographies
     for i, (k, v) in enumerate(custe.items()):
-        if phone_c not in clean_phone(v['PHONE']) or email_c != v['EMAIL']:
-            continue
-        if v['PRODUCT'] not in ids:
-            ids[v['PRODUCT']] = []
-        if v['GEO'] not in geos_u:
-            geos_u.append(v['GEO'])
-        if v['ID'] not in ids[v['PRODUCT']]:
-            ids[v['PRODUCT']].append(v['ID'])
+        if phone_c in clean_phone(v['PHONE']) or email_c == v['EMAIL']:
+            if v['PRODUCT'] not in ids:
+                ids[v['PRODUCT']] = []
+            if v['GEO'] not in geos_u:
+                geos_u.append(v['GEO'])
+            if v['ID'] not in ids[v['PRODUCT']]:
+                ids[v['PRODUCT']].append(v['ID'])
 
     if 'dtc' in ids.keys() and len(ids['dtc']) > 0:
         dtc_orders[0], dtc_orders[1] = get_dtc_orders(ids['dtc'], geos_u, c)
