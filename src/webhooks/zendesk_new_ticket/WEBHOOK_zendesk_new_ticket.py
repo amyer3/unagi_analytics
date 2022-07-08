@@ -31,7 +31,7 @@ def search_and_update(ticket_id: int, connection, **kwargs):
     ids = {}
     custe = {}
     sub_orders = [[], []]
-    dtc_orders = [[], []]
+    dtc_orders = {}
     for r in customer_data['data']:
         t = {}
         for i, v in enumerate(r):
@@ -51,7 +51,7 @@ def search_and_update(ticket_id: int, connection, **kwargs):
 
     if 'dtc' in ids.keys() and len(ids['dtc']) > 0:
         dtc_orders[0], dtc_orders[1] = get_dtc_orders(ids['dtc'], geos_u, c)
-    if 'sub' in ids.keys() and len(id['sub']) > 0:
+    if 'sub' in ids.keys() and len(ids['sub']) > 0:
         sub_orders[0], sub_orders[1] = get_subscription_orders(ids['allaccess'], c)
 
     subscriptions, shipments = {}, [[], []]
