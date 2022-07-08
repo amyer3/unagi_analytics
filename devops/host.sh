@@ -6,6 +6,8 @@ systemctl stop nginx
 echo "stoping pyorm service"
 systemctl stop pyorm
 
+git stash && git pull origin
+
 echo "stopping venv, just in case"
 deactivate
 #sudo apt-get install -y libtiff5-dev libjpeg8-dev zlib1g-dev liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev python-tk

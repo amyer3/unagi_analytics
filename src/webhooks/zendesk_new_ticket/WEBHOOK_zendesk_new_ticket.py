@@ -49,9 +49,9 @@ def search_and_update(ticket_id: int, connection, **kwargs):
         if v['ID'] not in ids[v['PRODUCT']]:
             ids[v['PRODUCT']].append(v['ID'])
 
-    if len(ids['dtc']) > 0:
+    if 'dtc' in ids.keys() and len(ids['dtc']) > 0:
         dtc_orders = get_dtc_orders(ids['dtc'], geos_u, c)
-    if len(id['sub']) > 0:
+    if 'sub' in ids.keys() and len(id['sub']) > 0:
         sub_orders = get_subscription_orders(ids['allaccess'], c)
 
     subscriptions, shipments = {}, []
