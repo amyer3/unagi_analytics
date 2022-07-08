@@ -73,8 +73,13 @@ def make_request():
             return jsonify("bad query. you know what you did.")
 
         tmp = c.get_data(connection=txn['connection'], query=txn['query'])
-        txn['result'] = tmp['data']
-        txn['columns'] = tmp['columns']
+        if 'data' in tmp.keys():
+            txn['result'] = tmp['data']
+        if 'columns' in tmp.keys():
+            txn['columns'] = tmp['columns']
+        if 'data' not in tmp.keys() or len(tmp['data']) == 0:
+            txn['result'] = []
+            txn['message'] = 'no data found'
     del event['password']
     return jsonify(event)
 
