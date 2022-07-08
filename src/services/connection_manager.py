@@ -32,11 +32,11 @@ class Connection:
             col_names = []
             for elt in c.description:
                 col_names.append(elt[0])
-
             if return_mapped:
                 return self._return_as_column_map(results, col_names)
             return {"data": results, "columns": col_names}
-        except Exception:
+        except Exception as e:
+            print(str(e))
             return {}
 
     def pg_connect(self):
