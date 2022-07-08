@@ -35,13 +35,11 @@ def write_fx():
 def execute_webhook(service: str, action: str, response):
     event = request.json
     print(event)
-    @response.call_on_close
-    def handle_webhook():
-        if service == 'zendesk':
-            if action == 'new_ticket':
-                Thread(
-                    target=search_and_update(ticket_id=event['ticket']['id'], connection=c, email=event['ticket']['email'],
-                                             phone=event['ticket']['phone'])).start()
+    if service == 'zendesk':
+        if action == 'new_ticket':
+            Thread(
+                target=search_and_update(ticket_id=event['ticket']['id'], connection=c, email=event['ticket']['email'],
+                                         phone=event['ticket']['phone'])).start()
     return jsonify(success=True)
 
 
@@ -74,13 +72,13 @@ def make_request():
             return jsonify("bad query. you know what you did.")
 
         tmp = c.get_data(connection=txn['connection'], query=txn['query'])
-        if 'data' in tmp.keys():
-            txn['result'] = tmp['data']
-        if 'columns' in tmp.keys():
-            txn['columns'] = tmp['columns']
-        if 'data' not in tmp.keys() or len(tmp['data']) == 0:
+        if 'data' not in tmp.keys():
             txn['result'] = []
             txn['message'] = 'no data found'
+        else:
+            txn['result'] = tmp['data']
+            txn['columns'] = tmp['columns']
+
     del event['password']
     return jsonify(event)
 
