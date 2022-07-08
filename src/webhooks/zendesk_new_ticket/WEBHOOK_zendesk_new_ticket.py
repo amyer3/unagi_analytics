@@ -30,7 +30,7 @@ def search_and_update(ticket_id: int, connection, **kwargs):
     geos_u = []
     ids = {}
     custe = {}
-    sub_orders = [[],[]]
+    sub_orders = [[], []]
     dtc_orders = [[], []]
     for r in customer_data['data']:
         t = {}
@@ -50,9 +50,9 @@ def search_and_update(ticket_id: int, connection, **kwargs):
             ids[v['PRODUCT']].append(v['ID'])
 
     if 'dtc' in ids.keys() and len(ids['dtc']) > 0:
-        dtc_orders = get_dtc_orders(ids['dtc'], geos_u, c)
+        dtc_orders[0], dtc_orders[1] = get_dtc_orders(ids['dtc'], geos_u, c)
     if 'sub' in ids.keys() and len(id['sub']) > 0:
-        sub_orders = get_subscription_orders(ids['allaccess'], c)
+        sub_orders[0], sub_orders[1] = get_subscription_orders(ids['allaccess'], c)
 
     subscriptions, shipments = {}, []
     if len(sub_orders[0]) > 0:
