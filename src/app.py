@@ -32,14 +32,16 @@ def write_fx():
 
 
 @app.route("/webhook/<string:service>/<string:action>", methods=["POST", "GET"])
-def execute_webhook(service: str, action: str):
+def execute_webhook(service: str, action: str, response):
     event = request.json
     print(event)
-    if service == 'zendesk':
-        if action == 'new_ticket':
-            Thread(
-                target=search_and_update(ticket_id=event['ticket']['id'], connection=c, email=event['ticket']['email'],
-                                         phone=event['ticket']['phone'])).start()
+    @response.call_on_close
+    def handle_webhook():
+        if service == 'zendesk':
+            if action == 'new_ticket':
+                Thread(
+                    target=search_and_update(ticket_id=event['ticket']['id'], connection=c, email=event['ticket']['email'],
+                                             phone=event['ticket']['phone'])).start()
     return jsonify(success=True)
 
 
