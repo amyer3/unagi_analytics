@@ -54,9 +54,9 @@ def search_and_update(ticket_id: int, connection, **kwargs):
     if 'sub' in ids.keys() and len(id['sub']) > 0:
         sub_orders[0], sub_orders[1] = get_subscription_orders(ids['allaccess'], c)
 
-    subscriptions, shipments = {}, []
+    subscriptions, shipments = {}, [[], []]
     if len(sub_orders[0]) > 0:
-        shipments = get_subscription_logistics(map(lambda x: x[0], sub_orders[0]), c)
+        shipments[0], shipments[1] = get_subscription_logistics(map(lambda x: x[0], sub_orders[0]), c)
 
     for s in sub_orders[0]:
         this_id = s[0]
