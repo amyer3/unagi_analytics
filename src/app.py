@@ -64,7 +64,7 @@ def make_request():
 
     for txn in event['transactions']:
         if 'predefined' in txn:
-            append = txn['fields'] if txn['fields'] is not None else {}
+            append = txn['fields'] if 'fields' in txn.keys() else {}
             q = find_prepared_statement(txn['predefined'], append)
             txn['query'] = q['query']
             txn['connection'] = q['connection']
