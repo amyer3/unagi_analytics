@@ -7,9 +7,15 @@ from .dtc_order_detail import make_dtc_order_detail
 def make_main_body(time: str, subs={}, dtc={}, cust={}) -> str:
     body = ''
     if len(subs.keys()) >= 1:
-        body += make_aa_customer_data(customer_data=cust) + '<tr></tr>' + make_aa_order_data(subs) + '<tr></tr>'
+        try:
+            body += make_aa_customer_data(customer_data=cust) + '<tr></tr>' + make_aa_order_data(subs) + '<tr></tr>'
+        except:
+            body+=''
     if len(dtc.keys()) >= 1:
-        body += make_dtc_customer_data(cust) + '<tr></tr>' + make_dtc_order_detail(dtc) + '<tr></tr>'
+        try:
+            body += make_dtc_customer_data(cust) + '<tr></tr>' + make_dtc_order_detail(dtc) + '<tr></tr>'
+        except Exception:
+            body+= ''
     if body == '':
         # empty body text
         body += '<tr class="center-middle" colspan="10">No data found.</tr>'
