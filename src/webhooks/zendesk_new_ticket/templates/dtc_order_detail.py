@@ -40,10 +40,10 @@ def make_row(order, items):
 
 
 def make_dtc_order_detail(lines):
-    if len(lines.keys()) == 0:
+    if len(lines) == 0:
         return ''
     body = ''
-    for k, o in lines.items():
+    for k, o in enumerate(lines):
         body += make_row(o, o['LINES'])
     return f"""
         <tr class="black-header">
