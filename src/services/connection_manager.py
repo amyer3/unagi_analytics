@@ -37,7 +37,7 @@ class Connection:
                 return self._return_as_column_map(results, col_names)
             return {"data": results, "columns": col_names}
         except Exception:
-            return []
+            return {}
 
     def pg_connect(self):
         try:
