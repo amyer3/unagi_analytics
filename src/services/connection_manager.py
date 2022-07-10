@@ -18,10 +18,14 @@ class Connection:
         if connection not in self.cursors:
             raise Exception("Unknown connection identifier: %s passed to Connection.get_data(), options are: %s" % (
                 connection, ', '.join(self.cursors.keys())))
+        if self.cursors[connection].closed > 0:
+            if connection == 'postgres':
+                self.cursors[connection] = self.pg_connect()
+            if connection == 'snowflake':
+                self.cursors[connection] = self.sf_connect()
+            if connection == 'snowflake_write':
+                self.cursors[connection] = self.sf_connect_write()
         return
-
-    def update_data(self, connection: str, query: str):
-        self.check_connection(connection=connection)
 
     def get_data(self, connection: str, query: str, return_mapped: bool = False):
         self.check_connection(connection=connection)
