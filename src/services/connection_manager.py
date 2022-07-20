@@ -19,6 +19,7 @@ class Connection:
             raise Exception("Unknown connection identifier: %s passed to Connection.get_data(), options are: %s" % (
                 connection, ', '.join(self.cursors.keys())))
         c = self.cursors[connection]
+        # TODO: this is an unnecessary round trip, find a way to ensure connection isn't closed by server more performant
         try:
             c.execute("SELECT 1")
             c.fetchall()

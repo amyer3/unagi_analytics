@@ -47,7 +47,7 @@ def execute_webhook(service: str, action: str, response):
 def serve_docs():
     pass
 
-#TODO: add in prepared statement to select & return full row from sub_current_status postgres
+
 @app.route("/request", methods=["POST"])
 def make_request():
     event = request.json
@@ -64,7 +64,9 @@ def make_request():
 
     for txn in event['transactions']:
         if 'predefined' in txn:
-            q = find_prepared_statement(txn['predefined'], txn['fields'])
+            fields = txn['fields'] if 'fields' in txn else {}
+            # TODO: just pass the whole txn to find_prepared_statement() and let the func take the logic.
+            q = find_prepared_statement(txn['predefined'], fields)
             txn['query'] = q['query']
             txn['connection'] = q['connection']
 
