@@ -34,9 +34,9 @@ class Connection:
         return
 
     def get_data(self, connection: str, query: str, return_mapped: bool = False):
-        self.check_connection(connection=connection)
-        c = self.cursors[connection]
         try:
+            self.check_connection(connection=connection)
+            c = self.cursors[connection]
             c.execute(query)
             results = c.fetchall()
             col_names = []
@@ -47,7 +47,7 @@ class Connection:
             return {"data": results, "columns": col_names}
         except Exception as e:
             print(str(e))
-            return {}
+            return {"error": e}
 
     def pg_connect(self):
         try:

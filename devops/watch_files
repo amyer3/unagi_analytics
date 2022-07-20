@@ -1,0 +1,5 @@
+TODO: this file will list paths of important files to watch
+eg. nginx deploy
+as well as any action to take if changed
+the host service will hash the existing files BEFORE pulling from github, then compare hashs after
+if changed, will take the if_change actions.
