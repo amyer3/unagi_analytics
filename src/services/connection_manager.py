@@ -18,7 +18,12 @@ class Connection:
         if connection not in self.cursors:
             raise Exception("Unknown connection identifier: %s passed to Connection.get_data(), options are: %s" % (
                 connection, ', '.join(self.cursors.keys())))
-        if self.cursors[connection].closed > 0:
+        c = self.cursors[connection]
+        try:
+            c.execute("SELECT 1")
+            c.fetchall()
+        except Exception as e:
+            print(f"Received error checking connection {connection}: {e}")
             if connection == 'postgres':
                 self.cursors[connection] = self.pg_connect()
             if connection == 'snowflake':
