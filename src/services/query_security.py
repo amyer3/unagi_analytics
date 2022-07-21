@@ -4,7 +4,7 @@ import re
 blocked_keywords = {
     'read': re.compile(
     "(delete|truncate|update|drop|insert|create|alter|grant|revoke|commit|save|rollback|rename|merge)", re.IGNORECASE),
-    'write': re.compile('')
+    'write': re.compile('a^')
 }
 # check for perenthesis, commas, and no DML / DDL language or comments
 insert_values = ''
