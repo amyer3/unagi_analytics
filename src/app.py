@@ -3,7 +3,7 @@ from threading import Thread
 from services.find_prepared_statement import *
 from services.validate import check_auth
 from services.connection_manager import Connection
-from services.query_security import check_bad_ddl
+from services.query_security import includes_blocked_keywords
 from webhooks.zendesk_new_ticket.WEBHOOK_zendesk_new_ticket import search_and_update
 
 app = Flask(__name__)
@@ -17,7 +17,7 @@ def heartbeat():
 @app.route('/write_fx', methods=['POST'])
 def write_fx():
     event = request.json
-    is_auth = check_auth(event['username'], event['password'])
+    is_auth, permission = check_auth(event['username'], event['password'])
     if not is_auth or event['username'] != 'lambda_write':
         return jsonify("Invalid Credentials")
     if not event['values'] or event is None:
@@ -51,7 +51,7 @@ def serve_docs():
 @app.route("/request", methods=["POST"])
 def make_request():
     event = request.json
-    is_auth = check_auth(event['username'], event['password'])
+    is_auth, permission = check_auth(event['username'], event['password'])
     if not request.is_secure:
         return jsonify("must use https, service will not auto-upgrade for you.")
 
@@ -70,7 +70,7 @@ def make_request():
             txn['query'] = q['query']
             txn['connection'] = q['connection']
 
-        if check_bad_ddl(txn['query']) is not None:
+        if includes_blocked_keywords(txn['query'], permission):
             return jsonify("bad query. you know what you did.")
 
         tmp = c.get_data(connection=txn['connection'], query=txn['query'])
